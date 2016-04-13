@@ -1,0 +1,55 @@
+things to do:
+	1. Bonus 获取规则
+		- 每一次成功的完成都获得与类型相关的bonus [Done]
+		- 每一次成功的完成都获得与时间相关的bonus 
+	2. Logging不显示
+	3. 彩色输出
+	4. ls模式输出事件的总时间 以及 时间利用率 [Done]
+	5. ls模式的输出可视化不够
+	
+
+
+相关问题以及解决方案:
+1. 清空缓存区方法
+	msvcrt
+
+2. ctrl-c丢失文件
+	with  as f = open('DATA', 'w'):
+		text = json.dumps(d)
+		f.write(text)
+	time.sleep(0.5)
+	raise error
+
+	ctrl-c没有保存app状态
+
+	最佳方法是开一个字程序处理
+		app = init_app()
+		error = None
+		try:
+			app.run()
+		except ExitApp:
+			pass
+		except Exception as e:
+			raise e
+		finally:
+			p = Process(target=end_app, args=(app,))
+			p.start()
+
+3. press CTRL-C in cmd mode would cause some problems
+	- cannot catch KeyboardInterrupt in raw_input
+	- http://bugs.python.org/issue439992
+	- cannot handle KeyboardInterrupt twice on Windows CMD
+	- solution
+		try:
+			app.run()
+		except (KeyboardInterrupt, EOFError,ExitApp):
+			pass
+		else:
+			raise
+		finally:
+			p = Process(target=end_app, args=(app,))
+			p.start()
+			time.sleep(2)
+			print 'Safely Exit the APP'
+
+4. 中文需要decode('GBK')之后才能连接SQL
