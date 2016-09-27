@@ -6,6 +6,7 @@ from interface import Welcome_Interface, Type_Interface, List_Interface, Input_I
 from config import configs
 from db.models import Event
 from db import db
+from backup_script import backup_from_file
 
 SCORES = configs['scores']
 DATAbase = configs['db']
@@ -48,6 +49,8 @@ class App_Engine(object):
 		'''
 		if cmd == 's' or cmd == 'start':
 			self.start_handler()
+		elif cmd == 'b' or cmd == 'backup':
+			self.backup_handler()
 		elif cmd == 'p' or cmd =='pause':
 			self.pause_handler()
 		elif cmd == 'r' or cmd == 'resume':
@@ -70,7 +73,7 @@ class App_Engine(object):
 		* display it as CURRENT EVENTS
 		* if there is already an event in process, automatically call pause first
 		'''
-		if not self.current_event is None:
+		if self.current_event is not None:
 			# there is a CURRENT_EVENT, pause it first
 			self.pause_handler()
 		self.interface = Type_Interface()
@@ -85,6 +88,25 @@ class App_Engine(object):
 		event.insert()
 		self.current_event = event.event_id
 		self.interface = Welcome_Interface()
+
+	def backup_handler(self):
+		"""
+		* wait the backup file
+		* create events and insert them into the database's table
+		"""
+		file_name = raw_input('Input the title for the event\n>>> ')
+		import os.path
+		if not os.path.isfile(file_name):
+			pause = raw_input("File doesn't exist, press any key to continue...")
+			return
+		try:
+			backup_from_file(file_name)
+		except BaseException, e:
+			print "Backup failed, press any key to continue..."
+			raise e
+			return
+		pause = raw_input("Backup successed, press any key to continue...")
+
 
 	def pause_handler(self):
 		'''

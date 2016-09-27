@@ -11,7 +11,8 @@ Desktop.ini
 dist
 build
 
-# uikit
-app/static/css/*
-app/static/fonts/*
-app/static/js/*
+# local files
+BONUS_LOG
+README
+DATA
+backup/*

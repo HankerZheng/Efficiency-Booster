@@ -76,7 +76,7 @@ class TextField(Field):
 		if not 'default' in kw:
 			kw['default'] = ''
 		if not 'ddl' in kw:
-			kw['ddl'] = ''
+			kw['ddl'] = 'text'
 		super(TextField, self).__init__(**kw)
 
 class BlobField(Field):
@@ -333,7 +333,7 @@ class Model(dict):
 
 if __name__ == '__main__':
 	logging.basicConfig(level = logging.DEBUG)
-	db.create_engine(user='myblogbytranswarp', password='ThisIsPassWord', database='test')
+	db.create_engine(user='test', password='test', database='test')
 	db.update('drop table if exists user')
 	db.update('create table user (id int primary key, name text, email text, passwd text, last_modified real)')
 	import doctest

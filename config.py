@@ -7,7 +7,7 @@ configs = {
 		'port': 3306,
 		'user': 'myblogbytranswarp',
 		'password': 'ThisIsPassWord',
-		'database': 'myblog'
+		'database': 'efficientbooster'
 	},
 	'types': ['Career-Oriented', 'Self-Promotion', 'Doing-Sports', 'Just-Watering', 'Sleeping-Time'],
 	'scores': [5, 3, 3, 1, 1]
